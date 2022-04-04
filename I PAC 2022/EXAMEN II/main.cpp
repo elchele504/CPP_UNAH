@@ -10,27 +10,30 @@ using namespace std;
 #define DERECHA 77
 #define ESC 27
 
-int main(){
+int main()
+{
 	char tecla;
 	int puntos=0;
 	int xPos=30, yPos=20;
-	
+
 	inicializarArreglo();
-	dificultad();	
+	dificultad();
 	gotoxy(50,2);
 	cout << puntos;
 	pintar();
-	gotoxy(xPos, yPos);cout<<(char)4;	
-	
-	while(tecla != ESC && gameover() ){
+	gotoxy(xPos, yPos);
+
+	while(tecla != ESC && gameover() )
+	{
 	    proceso(tecla, puntos);
 	}
-	
-	if ( !gameover()){
-		MessageBox(NULL, "Has perdido", "Perdedor", MB_OK);
+
+	if ( !gameover())
+	{
+		MessageBoxA(NULL,"Has Perdido","Perdedor", MB_OK);
 		system("cls");
 	}
-	
+
 	system("pause>NULL");
 	return 0;
 }
