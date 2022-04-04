@@ -13,7 +13,6 @@ using namespace std;
 #define DERECHA 77
 #define ESC 27
 
-
 int Puntos;
 int cuerpo[200][2];
 int n=1;
@@ -48,129 +47,147 @@ break;
 system("cls");
 }
 
-void gotoxy(int x,int y){
-HANDLE hCon;
-hCon=GetStdHandle(STD_OUTPUT_HANDLE);
-
-COORD dwPos;
-dwPos.X=x;
-dwPos.Y=y;
-
-SetConsoleCursorPosition(hCon,dwPos);
-}
-
-void pintar(){
-for(int i=2; i<78;i++){
-gotoxy(i,3);cout<<(char)205;
-gotoxy(i,23);cout<<(char)205;
-}
-for(int i=4;i<23;i++){
-gotoxy(2,i); cout<<(char)186;
-gotoxy(77,i); cout<<(char)186;
-}
-gotoxy(2,3);cout<<(char)201;
-gotoxy(2,23);cout<<(char)200;
-gotoxy(77,3);cout<<(char)187;
-gotoxy(77,23);cout<<(char)188;
-
-}
-
-void dibujarcuerpo(){
-for(int i=1; i<tam;i++){
-gotoxy(cuerpo[i][0],cuerpo[i][1]); cout<<"@";
-}
-}
-
-void guardarposicion(){
-cuerpo[n][0]=x;
-cuerpo[n][1]=y;
-n++;
-if (n==tam){n=1;}
-dibujarcuerpo();
-}
 
 
-void borrarcuerpo(){
-gotoxy(cuerpo[n][0],cuerpo[n][1]); cout<<" ";
-guardarposicion();
+void gotoxy(int x,int y)
+{
+	HANDLE hCon;
+	hCon=GetStdHandle(STD_OUTPUT_HANDLE);
+
+	COORD dwPos;
+	dwPos.X=x;
+	dwPos.Y=y;
+
+	SetConsoleCursorPosition(hCon,dwPos);
 }
 
-void Teclear(char &tecla){
-if (kbhit()){
-tecla=getch();
-switch(tecla){
-case ARRIBA:
-if (dir !=2){dir=1;}
-break;
-case ABAJO:
-if(dir != 1 ){dir=2;}
-break;
-case IZQUIERDA:
-if (dir != 3){dir=4;}
-break;
-case DERECHA:
-if (dir != 4){dir=3;}
-break;
-}
-}
+void pintar()
+{
+	for(int i=2; i<78;i++){
+		gotoxy(i,3);cout<<(char)205;
+		gotoxy(i,23);cout<<(char)205;	
+	}
+	for(int i=4;i<23;i++){
+		gotoxy(2,i); cout<<(char)186;
+		gotoxy(77,i); cout<<(char)186;
+	}
+	gotoxy(2,3);cout<<(char)201;
+	gotoxy(2,23);cout<<(char)200;
+	gotoxy(77,3);cout<<(char)187;
+	gotoxy(77,23);cout<<(char)188;
 
 }
 
-void comida(){
-if (x==xc && y==yc) {
-srand((unsigned)time(NULL));
-xc=(rand()% 73)+4;
-srand((unsigned)time(NULL));
-yc=(rand()% 19)+4;
-tam++;
-gotoxy(xc,yc); cout<<(char)4;
-Puntos++;
-gotoxy(50,2);cout<<Puntos;
+void dibujarcuerpo()
+{
+	for(int i=1; i<tam;i++)
+	{
+		gotoxy(cuerpo[i][0],cuerpo[i][1]); cout<<"@"; 
+	}
 }
+
+void guardarposicion()
+{
+	cuerpo[n][0]=x;
+	cuerpo[n][1]=y;
+	n++;
+	if (n==tam){n=1;}
+	dibujarcuerpo();
+}
+
+
+void borrarcuerpo()
+{
+		gotoxy(cuerpo[n][0],cuerpo[n][1]); cout<<" ";
+		guardarposicion();
+}
+
+void Teclear(char &tecla)
+{
+	if (kbhit()){
+		tecla=getch();
+		switch(tecla){
+			case ARRIBA:
+			if (dir !=2){dir=1;}
+			break;
+			case ABAJO:
+			if(dir != 1 ){dir=2;}
+			break;
+			case IZQUIERDA:
+			if (dir != 3){dir=4;}
+			break;
+			case DERECHA:
+			if (dir != 4){dir=3;}
+			break;	
+		}
+	}
 
 }
 
-bool gameover() {
-if (y==3 || y== 23 || x==2 || x==77){return false; }
-for (int j=tam-1; j>0;j--){
-if(cuerpo[j][0]==x && cuerpo [j][1]==y) {return false; }
-}
-return true;
+void comida()
+{
+	if (x==xc && y==yc) 
+	{
+		srand((unsigned)time(NULL));
+		xc=(rand()% 73)+4;
+		srand((unsigned)time(NULL));
+		yc=(rand()% 19)+4;
+		tam++;
+		gotoxy(xc,yc); cout<<(char)4;
+		Puntos++;
+		gotoxy(50,2);cout<<Puntos;
+	}
+
 }
 
-void puntosx(){
-tiempo=tiempo+0.05;
-int tiempo2=tiempo;
-gotoxy(35,2);cout<<tiempo;
-if (x==xxc && y== yyc){
-srand((unsigned)time(NULL));
-xxc=(rand()%73)+4;
-srand((unsigned)time(NULL));
-yyc=(rand()%19)+4;
-Puntos=Puntos+5;
-gotoxy(50,2);cout<<Puntos;
-}
-if (tiempo2 %10==0){
-gotoxy(xxc,yyc); cout<<(char)6;
-} else if (tiempo2 %15==0){
-gotoxy(xxc,yyc); cout<<" ";
-srand((unsigned)time(NULL));
-xxc=(rand()%73)+4;
-srand((unsigned)time(NULL));
-yyc=(rand()%19)+4;
-}
+bool gameover() 
+{
+	if (y==3 || y== 23 || x==2 || x==77){return false; }
+	for (int j=tam-1; j>0;j--)
+	{
+		if(cuerpo[j][0]==x && cuerpo [j][1]==y) {return false; }
+	}
+	return true;
 }
 
-void proceso(char &tecla, int &puntos){
-Puntos = puntos;
-borrarcuerpo();
-comida();
-puntosx();
-Teclear(tecla);
-Teclear(tecla);
-if (dir==1){y--;}
-if (dir==2){y++;}
-if (dir==3){x++;}
-if (dir==4){x--;}
-Sleep(dif);
+void puntosx()
+{
+	tiempo=tiempo+0.05;
+	int tiempo2=tiempo;
+	gotoxy(35,2);cout<<tiempo;
+	if (x==xxc && y== yyc){
+		srand((unsigned)time(NULL));
+		xxc=(rand()%73)+4;
+		srand((unsigned)time(NULL));
+		yyc=(rand()%19)+4;
+		Puntos=Puntos+5;
+        gotoxy(50,2);cout<<Puntos;
+	}
+	if (tiempo2 %5==0)
+	{
+	    gotoxy(xxc,yyc); cout<<(char)6;	
+	} 
+	else if (tiempo2 %15==0)
+	{
+		gotoxy(xxc,yyc); cout<<" ";
+		srand((unsigned)time(NULL));
+		xxc=(rand()%73)+4;
+		srand((unsigned)time(NULL));
+		yyc=(rand()%19)+4;
+	}
+} 
+
+void proceso(char &tecla, int &puntos)
+{ 
+	puntos = Puntos;
+	borrarcuerpo();
+	comida();
+	puntosx();
+	Teclear(tecla);
+	Teclear(tecla);
+	if (dir==1){y--;}
+	if (dir==2){y++;}
+	if (dir==3){x++;}
+	if (dir==4){x--;}
+	Sleep(dif);
 }
