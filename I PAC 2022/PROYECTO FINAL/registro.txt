@@ -1,0 +1,6 @@
+Numero de Placa:ABC1234
+Hora de Entrada:7 Hora de Salidda:20
+Cobro : L.234
+Numero de Placa:ABC123
+Hora de Entrada:8 Hora de Salidda:18
+Cobro : L.180
