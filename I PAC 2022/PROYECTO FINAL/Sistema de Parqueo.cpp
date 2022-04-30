@@ -41,15 +41,16 @@ do{
 	{
 		cout<<"Ingrese un Billete Cantida mayor al Cobro Porfavor"<<endl;
 		cin>>dinero;
+		cout<<"\n\n\n";
+		cambio=dinero-d;
 	}
 	else{
 	cout<<"\n\n\n";
 	cambio=dinero-d;
-	}	
+	}
+	//Sistema de Cambio o vuelto
+	
 	system("cls");
-	
-	//Sistema de Cambio ovuelto
-	
 	cout<<"El Cambio es  : L."<<cambio<<endl;
 	
 	c100=cambio/100;
@@ -85,6 +86,7 @@ do{
 }
 	while (opcion !=0);
 	archivo.close();
-
+	
+	cout<<"Sistema Finalizado"<<endl;
 	return 0;
 }
